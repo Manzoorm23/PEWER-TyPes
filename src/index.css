@@ -1,0 +1,463 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+/* Global Reset & Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+:root {
+  /* Carbon (Default) Theme */
+  --bg-color: #1c1c1c;
+  --panel-bg: rgba(40, 40, 40, 0.4);
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --text-primary: #f2f2f2;
+  --text-muted: #666666;
+  --text-untyped: #4a4a4a;
+  --accent-color: #e2b714;
+  --accent-glow: rgba(226, 183, 20, 0.2);
+  --correct-color: #d1d0c5;
+  --incorrect-color: #ca4754;
+  --extra-color: #7e2a33;
+  --keyboard-key-bg: #2d2d2d;
+  --keyboard-key-active: #e2b714;
+  --keyboard-key-text: #888888;
+  
+  --font-ui: 'Outfit', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Theme Configurations */
+body.theme-dracula {
+  --bg-color: #282a36;
+  --panel-bg: rgba(40, 42, 54, 0.6);
+  --panel-border: rgba(98, 114, 164, 0.2);
+  --text-primary: #f8f8f2;
+  --text-muted: #6272a4;
+  --text-untyped: #50fa7b;
+  --text-untyped-opacity: 0.4;
+  --accent-color: #ff79c6;
+  --accent-glow: rgba(255, 121, 198, 0.25);
+  --correct-color: #f8f8f2;
+  --incorrect-color: #ff5555;
+  --extra-color: #bd93f9;
+  --keyboard-key-bg: #44475a;
+  --keyboard-key-active: #ff79c6;
+  --keyboard-key-text: #f8f8f2;
+}
+
+body.theme-cyberpunk {
+  --bg-color: #12041d;
+  --panel-bg: rgba(30, 4, 49, 0.5);
+  --panel-border: rgba(0, 243, 255, 0.2);
+  --text-primary: #00f3ff;
+  --text-muted: #9625cd;
+  --text-untyped: #481467;
+  --accent-color: #f3e600;
+  --accent-glow: rgba(243, 230, 0, 0.3);
+  --correct-color: #00f3ff;
+  --incorrect-color: #ff0055;
+  --extra-color: #b3003b;
+  --keyboard-key-bg: #220b33;
+  --keyboard-key-active: #f3e600;
+  --keyboard-key-text: #00f3ff;
+}
+
+body.theme-forest {
+  --bg-color: #1b2421;
+  --panel-bg: rgba(38, 48, 45, 0.5);
+  --panel-border: rgba(255, 255, 255, 0.05);
+  --text-primary: #e1dcd6;
+  --text-muted: #5e6b66;
+  --text-untyped: #3e4a45;
+  --accent-color: #a3c9a8;
+  --accent-glow: rgba(163, 201, 168, 0.2);
+  --correct-color: #e1dcd6;
+  --incorrect-color: #e76f51;
+  --extra-color: #b54f36;
+  --keyboard-key-bg: #2d3834;
+  --keyboard-key-active: #a3c9a8;
+  --keyboard-key-text: #e1dcd6;
+}
+
+body.theme-sakura {
+  --bg-color: #2e1e23;
+  --panel-bg: rgba(69, 44, 52, 0.4);
+  --panel-border: rgba(255, 183, 197, 0.1);
+  --text-primary: #fbc6d0;
+  --text-muted: #8d626d;
+  --text-untyped: #583a42;
+  --accent-color: #ff85a2;
+  --accent-glow: rgba(255, 133, 162, 0.25);
+  --correct-color: #fbc6d0;
+  --incorrect-color: #e25858;
+  --extra-color: #ab3c3c;
+  --keyboard-key-bg: #4a343c;
+  --keyboard-key-active: #ff85a2;
+  --keyboard-key-text: #fbc6d0;
+}
+
+body.theme-terminal {
+  --bg-color: #050805;
+  --panel-bg: rgba(0, 25, 0, 0.4);
+  --panel-border: rgba(0, 255, 0, 0.18);
+  --text-primary: #33ff33;
+  --text-muted: #158015;
+  --text-untyped: #0a3a0a;
+  --accent-color: #33ff33;
+  --accent-glow: rgba(51, 255, 51, 0.25);
+  --correct-color: #33ff33;
+  --incorrect-color: #ff3333;
+  --extra-color: #990000;
+  --keyboard-key-bg: #091209;
+  --keyboard-key-active: #33ff33;
+  --keyboard-key-text: #33ff33;
+}
+
+/* CRT Screen Scanlines for Retro Themes */
+body.theme-cyberpunk::after,
+body.theme-terminal::after {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 50%);
+  z-index: 9999;
+  background-size: 100% 4px;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+body {
+  font-family: var(--font-ui);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Background animated glow or subtle grid */
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 10% 20%, var(--accent-glow) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, var(--accent-glow) 0%, transparent 40%);
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* Glassmorphism containers */
+.glass-panel {
+  background: var(--panel-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* Micro-animations and utility effects */
+.btn-primary {
+  background-color: var(--panel-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-family: var(--font-ui);
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 15px var(--accent-glow);
+  transform: translateY(-2px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Text glow */
+.glow-text {
+  text-shadow: 0 0 8px var(--accent-glow);
+}
+
+/* Caret blinking keyframe */
+@keyframes smooth-blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.15;
+  }
+}
+
+.caret-blink {
+  animation: smooth-blink 1s infinite ease-in-out;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--panel-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color);
+}
+
+/* ==========================================
+   INTERACTIVE THEME BACKGROUND PARTICLES 
+   ========================================== */
+.theme-bg-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Carbon (Glowing Amber Embers rising up) */
+.theme-carbon .particle {
+  background: var(--accent-color);
+  border-radius: 50%;
+  filter: blur(1.5px);
+  box-shadow: 
+    0 0 8px var(--accent-color), 
+    0 0 16px var(--accent-color);
+  opacity: 0;
+  animation: carbon-ember-float var(--wpm-cycle, 8s) infinite linear;
+}
+
+.theme-carbon .particle.p-1 { width: 10px; height: 10px; filter: blur(1px); }
+.theme-carbon .particle.p-2 { width: 6px; height: 6px; filter: blur(1.5px); }
+.theme-carbon .particle.p-3 { width: 12px; height: 12px; filter: blur(2px); }
+.theme-carbon .particle.p-4 { width: 5px; height: 5px; }
+.theme-carbon .particle.p-5 { width: 9px; height: 9px; }
+.theme-carbon .particle.p-6 { width: 7px; height: 7px; }
+.theme-carbon .particle.p-7 { width: 11px; height: 11px; filter: blur(1.8px); }
+.theme-carbon .particle.p-8 { width: 6px; height: 6px; }
+
+/* Dracula (Floating Magic Bubbles) */
+.theme-dracula .particle {
+  background: var(--accent-color);
+  filter: blur(3px);
+  box-shadow: 0 0 12px var(--accent-glow);
+  opacity: 0.14;
+  width: 10px;
+  height: 10px;
+  animation: bubble-float-up var(--wpm-cycle, 8s) infinite linear;
+}
+
+/* Cyberpunk (Neon Data Sparks) */
+.theme-cyberpunk .particle {
+  border-radius: 0;
+  background: var(--text-primary);
+  width: 3px;
+  height: 16px;
+  opacity: 0.15;
+  box-shadow: 0 0 10px var(--text-primary);
+  animation: matrix-falling var(--wpm-cycle, 4s) infinite linear;
+}
+
+/* Forest (Swaying Mint Leaves) */
+.theme-forest .particle {
+  background: var(--accent-color);
+  opacity: 0.16;
+  filter: blur(4px);
+  width: 14px;
+  height: 7px;
+  border-radius: 50% 0;
+  animation: leaf-sway-down var(--wpm-cycle, 7s) infinite ease-in-out;
+}
+
+/* Sakura (Falling Cherry Blossom Flowers) */
+.theme-sakura .particle {
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  filter: none;
+  width: auto;
+  height: auto;
+  opacity: 0;
+  animation: petal-drift var(--wpm-cycle, 9s) infinite linear;
+}
+
+.theme-sakura .particle::after {
+  content: "🌸";
+  display: block;
+}
+
+.theme-sakura .particle.p-1 { font-size: 30px; }
+.theme-sakura .particle.p-2 { font-size: 36px; }
+.theme-sakura .particle.p-3 { font-size: 24px; }
+.theme-sakura .particle.p-4 { font-size: 14px; }
+.theme-sakura .particle.p-5 { font-size: 22px; }
+.theme-sakura .particle.p-6 { font-size: 16px; }
+.theme-sakura .particle.p-7 { font-size: 20px; }
+.theme-sakura .particle.p-8 { font-size: 18px; }
+
+/* Terminal (Falling Binary Streams) */
+.theme-terminal .particle {
+  border-radius: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--text-primary);
+  opacity: 0.15;
+  animation: binary-drip var(--wpm-cycle, 5s) infinite linear;
+}
+
+/* Binary character injections for terminal theme */
+.theme-terminal .particle.p-1::after { content: "101100"; }
+.theme-terminal .particle.p-2::after { content: "0101"; }
+.theme-terminal .particle.p-3::after { content: "11101"; }
+.theme-terminal .particle.p-4::after { content: "0"; }
+.theme-terminal .particle.p-5::after { content: "101"; }
+.theme-terminal .particle.p-6::after { content: "0"; }
+.theme-terminal .particle.p-7::after { content: "1100"; }
+.theme-terminal .particle.p-8::after { content: "01"; }
+
+/* Set starting coordinates and offset delays */
+.particle.p-1 { left: 8%; top: 75%; width: 280px; height: 280px; animation-delay: 0s; }
+.particle.p-2 { left: 78%; top: 10%; width: 340px; height: 340px; animation-delay: -1.5s; }
+.particle.p-3 { left: 42%; top: 48%; width: 190px; height: 190px; animation-delay: -3.2s; }
+.particle.p-4 { left: 85%; top: 85%; width: 10px; height: 10px; animation-delay: -0.7s; }
+.particle.p-5 { left: 18%; top: 15%; width: 14px; height: 14px; animation-delay: -4s; }
+.particle.p-6 { left: 52%; top: 88%; width: 8px; height: 8px; animation-delay: -2.2s; }
+.particle.p-7 { left: 92%; top: 35%; width: 11px; height: 11px; animation-delay: -5.1s; }
+.particle.p-8 { left: 4%; top: 40%; width: 15px; height: 15px; animation-delay: -2.8s; }
+
+/* Dynamic Animations Keyframes */
+@keyframes carbon-ember-float {
+  0% {
+    transform: translateY(110vh) translateX(0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: calc(0.35 * var(--wpm-intensity, 1));
+  }
+  90% {
+    opacity: calc(0.35 * var(--wpm-intensity, 1));
+  }
+  100% {
+    transform: translateY(-10vh) translateX(45px) scale(0.6);
+    opacity: 0;
+  }
+}
+
+@keyframes bubble-float-up {
+  0% { transform: translateY(110vh) scale(0.7); opacity: 0; }
+  10% { opacity: 0.25; }
+  90% { opacity: 0.25; }
+  100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+}
+
+@keyframes matrix-falling {
+  0% { transform: translateY(-10vh) translateX(0); }
+  100% { transform: translateY(110vh) translateX(20px); }
+}
+
+@keyframes leaf-sway-down {
+  0%, 100% { transform: translate(0, -10vh) rotate(0deg); opacity: 0; }
+  15% { opacity: 0.22; }
+  50% { transform: translate(30px, 50vh) rotate(180deg); opacity: 0.26; }
+  85% { opacity: 0.22; }
+  100% { transform: translate(-20px, 110vh) rotate(360deg); opacity: 0; }
+}
+
+@keyframes petal-drift {
+  0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
+  12% { opacity: 0.45; }
+  50% { transform: translateY(50vh) translateX(40px) rotate(140deg); }
+  100% { transform: translateY(110vh) translateX(-25px) rotate(280deg); opacity: 0; }
+}
+
+@keyframes binary-drip {
+  0% { transform: translateY(-10vh); }
+  100% { transform: translateY(110vh); }
+}
+
+/* ==========================================
+   FLUID RESPONSIVE ADAPTATIONS
+   ========================================== */
+@media (max-width: 900px) {
+  .app-container {
+    padding: 24px 16px;
+    gap: 24px;
+  }
+  .typing-text-content {
+    font-size: 1.25rem;
+    line-height: 1.7;
+  }
+  .typing-text-wrapper {
+    padding: 18px;
+    min-height: 120px;
+    max-height: 150px;
+  }
+  .keyboard-visualizer {
+    display: none; /* Hide virtual keyboard on small screen layouts */
+  }
+}
+
+@media (max-width: 600px) {
+  .logo-text {
+    font-size: 1.25rem;
+  }
+  .results-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .stat-value {
+    font-size: 1.35rem;
+  }
+  .test-config-bar {
+    flex-direction: column;
+    padding: 8px 16px;
+    gap: 8px;
+  }
+  .config-divider {
+    width: 80%;
+    height: 1px;
+  }
+}
+
