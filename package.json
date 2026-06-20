@@ -2,6 +2,7 @@
   "name": "typespeed-tester",
   "private": true,
   "version": "0.0.0",
+  "description": "A premium, feature-rich typing speed test application built with React, TypeScript, and Vanilla CSS, featuring interactive keyboard visualizer, audio synthesizer, and real-time SVG telemetry charts.",
   "type": "module",
   "scripts": {
     "dev": "vite",
